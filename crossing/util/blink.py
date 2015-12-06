@@ -8,19 +8,28 @@
 
 import RPi.GPIO as gpio
 import time
+import sys
 
-CHAN = 11 #7
+#CHAN = 13 #15
+
+numargs = len(sys.argv)
+
+if numargs < 2:
+    print "ERROR: GPIO pin number must be first arg"
+    sys.exit(-1)
+
+chan = int( sys.argv[1] )
 
 gpio.setmode(gpio.BOARD)
 gpio.setwarnings(False)
 
 assert gpio.getmode() == gpio.BOARD
-gpio.setup(CHAN, gpio.OUT)
+gpio.setup(chan, gpio.OUT)
 
 while True:
-    gpio.output(CHAN, True)
+    gpio.output(chan, True)
     time.sleep(.4)
-    gpio.output(CHAN, False)
+    gpio.output(chan, False)
     time.sleep(.4)
 
 
